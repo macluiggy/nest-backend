@@ -26,14 +26,14 @@ export class TaskService {
   }
 
   update(id: string, taskDto: TaskDto): Task {
-    for (let i = 0; i < this.tasks.length; i++) {
-      if (this.tasks[i].id === id) {
-        this.tasks[i] = {
-          ...this.tasks[i],
-          ...taskDto,
-        };
-        return this.tasks[i];
-      }
-    }
+    const newTask = { id, ...taskDto };
+    this.tasks = this.tasks.map((task) =>
+      task.id === id ? { ...task, ...taskDto } : task,
+    );
+    return newTask;
+  }
+
+  delete(id: string): void {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 }

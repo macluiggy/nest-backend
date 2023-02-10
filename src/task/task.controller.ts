@@ -58,9 +58,7 @@ export class TaskController {
     const { description, isDone } = body;
     return { description, isDone };
   }
-  constructor(
-    private readonly taskService: TaskService
-  ) {}
+  constructor(private readonly taskService: TaskService) {}
   @Post('create')
   createTask(@Body() body: { description: string; isDone: boolean }) {
     return this.taskService.create(body);
@@ -82,5 +80,10 @@ export class TaskController {
     @Body() body: { description: string; isDone: boolean },
   ) {
     return this.taskService.update(id, body);
+  }
+
+  @Delete('delete/:id')
+  deleteTask(@Param('id') id: string) {
+    return this.taskService.delete(id);
   }
 }
