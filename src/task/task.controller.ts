@@ -11,6 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { TaskService } from './task.service';
 
 @Controller('api/v1/task')
 export class TaskController {
@@ -56,5 +57,12 @@ export class TaskController {
   methodPostBody(@Body() body: { description: string; isDone: string }) {
     const { description, isDone } = body;
     return { description, isDone };
+  }
+  constructor(
+    private readonly taskService: TaskService
+  ) {}
+  @Post('create')
+  createTask(@Body() body: { description: string; isDone: boolean }) {
+    return this.taskService.create(body);
   }
 }
