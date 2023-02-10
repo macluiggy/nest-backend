@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -13,11 +14,11 @@ import { Request, Response } from 'express';
 
 @Controller('api/v1/task')
 export class TaskController {
-  @Post()
-  methodPost(@Req() req: Request) {
-    return `method: ${req.method}`;
-    // return res.status(200).json({ message: 'method: ' + req.method });
-  }
+  // @Post()
+  // methodPost(@Req() req: Request) {
+  //   return `method: ${req.method}`;
+  //   // return res.status(200).json({ message: 'method: ' + req.method });
+  // }
 
   @Get('done')
   methodGet(@Req() req: Request, @Res() res: Response) {
@@ -48,6 +49,12 @@ export class TaskController {
   @Get()
   methodGetQuery(@Query() query: { description: string; isDone: string }) {
     const { description, isDone } = query;
+    return { description, isDone };
+  }
+
+  @Post()
+  methodPostBody(@Body() body: { description: string; isDone: string }) {
+    const { description, isDone } = body;
     return { description, isDone };
   }
 }
