@@ -65,4 +65,22 @@ export class TaskController {
   createTask(@Body() body: { description: string; isDone: boolean }) {
     return this.taskService.create(body);
   }
+
+  @Get('select')
+  getTasks() {
+    return this.taskService.findAll();
+  }
+
+  @Get('select/:id')
+  getTask(@Param('id') id: string) {
+    return this.taskService.findOne(id);
+  }
+
+  @Put('update/:id')
+  updateTask(
+    @Param('id') id: string,
+    @Body() body: { description: string; isDone: boolean },
+  ) {
+    return this.taskService.update(id, body);
+  }
 }
