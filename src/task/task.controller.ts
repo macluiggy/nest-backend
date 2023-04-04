@@ -1,17 +1,23 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
   Query,
   Req,
   Res,
+  UsePipes,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { TaskService } from './task.service';
+import { ValidationPipe } from '@nestjs/common';
+import { TaskDto } from './dto/task.dto';
 
 @Controller('api/v1/task')
 export class TaskController {
@@ -60,8 +66,15 @@ export class TaskController {
   }
   constructor(private readonly taskService: TaskService) {}
   @Post('create')
-  createTask(@Body() body: { description: string; isDone: boolean }) {
-    return this.taskService.create(body);
+  createTask(@Body() body: TaskDto) {
+    throw new BadRequestException('Error de peticion');
+    // throw new HttpException('Error de peticion', HttpStatus.BAD_REQUEST);
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     reject('error');
+    //   }, 2000);
+    // })
+    // return this.taskService.create(body);
   }
 
   @Get('select')
@@ -75,10 +88,7 @@ export class TaskController {
   }
 
   @Put('update/:id')
-  updateTask(
-    @Param('id') id: string,
-    @Body() body: { description: string; isDone: boolean },
-  ) {
+  updateTask(@Param('id') id: string, @Body() body: TaskDto) {
     return this.taskService.update(id, body);
   }
 
