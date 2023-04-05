@@ -67,7 +67,12 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
   @Post('create')
   createTask(@Body() body: TaskDto) {
-    throw new BadRequestException('Error de peticion');
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('Something went wrong');
+      }, 5000);
+    });
+    // throw new BadRequestException('Error de peticion');
     // throw new HttpException('Error de peticion', HttpStatus.BAD_REQUEST);
     // return new Promise((resolve, reject) => {
     //   setTimeout(() => {

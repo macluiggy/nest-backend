@@ -24,11 +24,12 @@ export class AllExeptionsFilter implements ExceptionFilter {
         typeof msg === 'string' ? msg : JSON.stringify(msg)
       }`,
     );
+    
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: exception.message,
+      message: msg,
     });
   }
 }
